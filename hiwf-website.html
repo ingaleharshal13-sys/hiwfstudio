@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIWF — Harshal Ingale Wedding Films</title>
+<meta name="description" content="Luxury wedding photography & cinematic films. Capturing your forever moments with artistry and emotion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0B0B0B;
+    --deep: #111111;
+    --grey: #1A1A1A;
+    --grey-mid: #2a2a2a;
+    --white: #F5F5F5;
+    --white-dim: rgba(245,245,245,0.7);
+    --gold: #C8A96A;
+    --gold-light: #e0c98a;
+    --gold-dim: rgba(200,169,106,0.15);
+    --gold-border: rgba(200,169,106,0.3);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--gold-border);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), width 0.3s, height 0.3s, opacity 0.3s;
+    transform: translate(-50%, -50%);
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 60px;
+    transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
+  }
+  nav.scrolled {
+    padding: 16px 60px;
+    background: rgba(11,11,11,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--gold-border);
+  }
+  .nav-logo {
+    display: flex; flex-direction: column;
+    text-decoration: none;
+  }
+  .nav-logo-main {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem; font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--white);
+  }
+  .nav-logo-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem; font-weight: 300;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 40px; align-items: center; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--white-dim); text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.35s ease;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    border: 1px solid var(--gold-border);
+    padding: 10px 24px;
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold) !important;
+    transition: all 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* HERO */
+  .hero {
+    height: 100vh; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(200,169,106,0.08) 0%, transparent 70%),
+      linear-gradient(180deg, transparent 60%, rgba(11,11,11,0.8) 100%);
+    z-index: 1;
+  }
+
+  /* Animated film grain */
+  .grain {
+    position: fixed; inset: -200%;
+    width: 400%; height: 400%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9990; opacity: 0.4;
+    animation: grain 0.8s steps(1) infinite;
+  }
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    10% { transform: translate(-2%,-2%); }
+    20% { transform: translate(2%,2%); }
+    30% { transform: translate(-1%,3%); }
+    40% { transform: translate(3%,-1%); }
+    50% { transform: translate(-3%,1%); }
+    60% { transform: translate(1%,-3%); }
+    70% { transform: translate(-2%,2%); }
+    80% { transform: translate(2%,-2%); }
+    90% { transform: translate(1%,1%); }
+  }
+
+  /* Cinematic grid overlay */
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: 
+      linear-gradient(rgba(200,169,106,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,106,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  /* Floating orbs */
+  .orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none; z-index: 0;
+    animation: float-orb 8s ease-in-out infinite;
+  }
+  .orb-1 { width: 400px; height: 400px; background: rgba(200,169,106,0.06); top: 20%; left: -10%; animation-delay: 0s; }
+  .orb-2 { width: 300px; height: 300px; background: rgba(200,169,106,0.04); bottom: 10%; right: -5%; animation-delay: -3s; }
+  .orb-3 { width: 200px; height: 200px; background: rgba(200,169,106,0.05); top: 50%; left: 60%; animation-delay: -5s; }
+  @keyframes float-orb {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(20px,-30px) scale(1.05); }
+    66% { transform: translate(-15px,20px) scale(0.95); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 20px;
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem; letter-spacing: 0.6em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 32px;
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    opacity: 0; transform: translateY(20px);
+    animation: reveal 1s ease forwards 0.5s;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; height: 1px; width: 60px; background: var(--gold-border);
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 600; line-height: 0.95;
+    letter-spacing: 0.05em;
+    opacity: 0; transform: translateY(40px);
+    animation: reveal 1.2s cubic-bezier(0.23,1,0.32,1) forwards 0.8s;
+  }
+  .hero-title-accent { color: var(--gold); font-style: italic; display: block; }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-style: italic; color: var(--white-dim);
+    margin-top: 24px; letter-spacing: 0.05em;
+    opacity: 0; transform: translateY(20px);
+    animation: reveal 1s ease forwards 1.3s;
+  }
+  .hero-actions {
+    margin-top: 56px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    opacity: 0; transform: translateY(20px);
+    animation: reveal 1s ease forwards 1.6s;
+  }
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-primary {
+    background: var(--gold); color: var(--black);
+    padding: 16px 44px; font-size: 0.72rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    text-decoration: none; font-family: 'Outfit', sans-serif; font-weight: 500;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--gold-light); transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 60px rgba(200,169,106,0.3); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-outline {
+    border: 1px solid var(--gold-border); color: var(--white);
+    padding: 16px 44px; font-size: 0.72rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    text-decoration: none; font-family: 'Outfit', sans-serif; font-weight: 400;
+    transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  /* Scroll indicator */
+  .scroll-cue {
+    position: absolute; bottom: 48px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold-dim); z-index: 2;
+    opacity: 0; animation: reveal 1s ease forwards 2.2s;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%,100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* SECTION COMMON */
+  section { position: relative; overflow: hidden; }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem; letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-label::before {
+    content: ''; height: 1px; width: 40px; background: var(--gold-border);
+  }
+
+  .section-heading {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    font-weight: 600; line-height: 1.1;
+    letter-spacing: 0.03em;
+  }
+
+  .section-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; color: var(--white-dim);
+    line-height: 1.8; font-weight: 300;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    padding: 60px;
+    border-top: 1px solid var(--gold-border);
+    border-bottom: 1px solid var(--gold-border);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    text-align: center; padding: 20px;
+    border-right: 1px solid var(--gold-border);
+    position: relative;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cinzel', serif; font-size: 3rem; font-weight: 700;
+    color: var(--gold); display: block; line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--white-dim); margin-top: 8px; display: block;
+  }
+
+  /* PORTFOLIO SECTION */
+  .portfolio {
+    padding: 120px 60px;
+    background: var(--deep);
+  }
+  .portfolio-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 80px;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+  .portfolio-card {
+    position: relative; overflow: hidden;
+    background: var(--grey);
+    cursor: none;
+  }
+  .portfolio-card:nth-child(1) { grid-column: 1 / 8; grid-row: 1 / 2; aspect-ratio: 4/3; }
+  .portfolio-card:nth-child(2) { grid-column: 8 / 13; grid-row: 1 / 2; aspect-ratio: 3/4; }
+  .portfolio-card:nth-child(3) { grid-column: 1 / 5; grid-row: 2 / 3; aspect-ratio: 3/4; }
+  .portfolio-card:nth-child(4) { grid-column: 5 / 13; grid-row: 2 / 3; aspect-ratio: 16/9; }
+  .portfolio-card:nth-child(5) { grid-column: 1 / 7; grid-row: 3 / 4; aspect-ratio: 16/9; }
+  .portfolio-card:nth-child(6) { grid-column: 7 / 13; grid-row: 3 / 4; aspect-ratio: 4/3; }
+
+  .card-img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.23,1,0.32,1);
+    display: block;
+  }
+  /* Placeholder gradient for images */
+  .card-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, var(--grey) 0%, var(--grey-mid) 50%, var(--grey) 100%);
+    background-size: 200% 200%;
+    animation: shimmer 3s ease-in-out infinite;
+    display: flex; align-items: center; justify-content: center;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 200%; }
+    100% { background-position: -200% -200%; }
+  }
+  .card-placeholder-icon {
+    font-size: 2rem; opacity: 0.15;
+  }
+
+  .portfolio-card:hover .card-img { transform: scale(1.06); }
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(11,11,11,0.85) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 32px;
+  }
+  .portfolio-card:hover .card-overlay { opacity: 1; }
+  .card-tag {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 6px;
+  }
+  .card-title {
+    font-family: 'Cinzel', serif; font-size: 1.2rem;
+    color: var(--white);
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 120px 60px;
+    background: var(--black);
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    margin-top: 80px;
+  }
+  .service-card {
+    padding: 56px 48px;
+    border: 1px solid transparent;
+    position: relative; overflow: hidden;
+    transition: border-color 0.4s, background 0.4s;
+    background: var(--deep);
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0); transition: transform 0.5s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { border-color: var(--gold-border); background: var(--grey); }
+
+  .service-num {
+    font-family: 'Cinzel', serif; font-size: 0.65rem;
+    letter-spacing: 0.4em; color: var(--gold);
+    margin-bottom: 32px; display: block;
+  }
+  .service-icon {
+    font-size: 2rem; margin-bottom: 24px; display: block;
+  }
+  .service-name {
+    font-family: 'Cinzel', serif; font-size: 1.3rem;
+    margin-bottom: 16px; line-height: 1.3;
+  }
+  .service-desc {
+    font-size: 0.88rem; color: var(--white-dim); line-height: 1.7;
+  }
+  .service-price {
+    margin-top: 32px; padding-top: 24px;
+    border-top: 1px solid var(--gold-border);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; color: var(--gold); font-style: italic;
+  }
+
+  /* EXPERIENCE SECTION */
+  .experience {
+    padding: 120px 60px;
+    background: var(--deep);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 120px;
+    align-items: center;
+  }
+  .exp-visual {
+    position: relative; height: 600px;
+  }
+  .exp-frame {
+    position: absolute;
+    border: 1px solid var(--gold-border);
+    background: var(--grey);
+    overflow: hidden;
+  }
+  .exp-frame-main { inset: 0 40px 40px 0; }
+  .exp-frame-accent { top: 40px; right: 0; bottom: 0; left: 40px; }
+  .exp-frame-accent .card-placeholder {
+    opacity: 0.5;
+  }
+  .exp-badge {
+    position: absolute; bottom: 60px; left: -30px; z-index: 10;
+    background: var(--gold); color: var(--black);
+    padding: 20px 28px;
+    font-family: 'Cinzel', serif;
+  }
+  .exp-badge-num { font-size: 2.5rem; font-weight: 700; display: block; line-height: 1; }
+  .exp-badge-text { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
+
+  /* PROCESS */
+  .process {
+    padding: 120px 60px;
+    background: var(--black);
+  }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 80px;
+    position: relative;
+  }
+  .process-steps::before {
+    content: ''; position: absolute;
+    top: 28px; left: 12.5%; right: 12.5%;
+    height: 1px; background: var(--gold-border);
+  }
+  .process-step { padding: 0 32px; text-align: center; }
+  .step-dot {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 1px solid var(--gold-border);
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 32px;
+    font-family: 'Cinzel', serif; font-size: 0.8rem; color: var(--gold);
+    position: relative; z-index: 1;
+    transition: all 0.3s;
+  }
+  .process-step:hover .step-dot {
+    background: var(--gold); color: var(--black);
+    box-shadow: 0 0 40px rgba(200,169,106,0.4);
+  }
+  .step-title {
+    font-family: 'Cinzel', serif; font-size: 1rem;
+    margin-bottom: 12px;
+  }
+  .step-desc { font-size: 0.82rem; color: var(--white-dim); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    padding: 120px 60px;
+    background: var(--deep);
+    overflow: hidden;
+  }
+  .testimonials-track {
+    display: flex; gap: 32px; margin-top: 80px;
+    animation: scroll-track 40s linear infinite;
+    width: max-content;
+  }
+  .testimonials-track:hover { animation-play-state: paused; }
+  @keyframes scroll-track {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .testimonial-card {
+    min-width: 440px; padding: 48px;
+    border: 1px solid var(--gold-border);
+    background: var(--grey);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '"'; position: absolute; top: 24px; right: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; color: var(--gold-border); line-height: 1;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: var(--white-dim); line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .author-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif; font-size: 0.9rem; color: var(--gold);
+  }
+  .author-name { font-family: 'Cinzel', serif; font-size: 0.85rem; color: var(--white); }
+  .author-location { font-size: 0.72rem; color: var(--gold); letter-spacing: 0.1em; }
+  .stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 4px; }
+
+  /* CLIENT PORTAL CTA */
+  .portal-cta {
+    padding: 120px 60px;
+    background: var(--black);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .portal-cta-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200,169,106,0.06) 0%, transparent 70%);
+  }
+  .portal-features {
+    display: flex; justify-content: center; gap: 60px;
+    margin: 60px 0; flex-wrap: wrap;
+  }
+  .portal-feature {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--white-dim);
+  }
+  .portal-feature-icon {
+    width: 52px; height: 52px; border: 1px solid var(--gold-border);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+  }
+  .portal-feature:hover .portal-feature-icon {
+    background: var(--gold-dim); border-color: var(--gold);
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 120px 60px;
+    background: var(--deep);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 120px;
+    align-items: start;
+  }
+  .contact-info { }
+  .contact-details {
+    margin-top: 48px; display: flex; flex-direction: column; gap: 24px;
+  }
+  .contact-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 24px; border: 1px solid var(--gold-border);
+    transition: border-color 0.3s;
+  }
+  .contact-item:hover { border-color: var(--gold); }
+  .contact-item-icon { font-size: 1.2rem; color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+  .contact-item-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .contact-item-value { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--white); }
+  .contact-item-link { text-decoration: none; color: var(--white); transition: color 0.3s; }
+  .contact-item-link:hover { color: var(--gold); }
+
+  .contact-form { }
+  .form-group { margin-bottom: 24px; }
+  .form-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 10px; }
+  .form-input, .form-textarea, .form-select {
+    width: 100%; background: var(--grey);
+    border: 1px solid var(--gold-border);
+    color: var(--white); padding: 16px 20px;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem; font-weight: 300;
+    outline: none; transition: border-color 0.3s;
+    appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--gold);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(245,245,245,0.3); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-select { cursor: pointer; }
+  .form-select option { background: var(--grey); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 60px 40px;
+    background: var(--black);
+    border-top: 1px solid var(--gold-border);
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px;
+    margin-bottom: 60px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700;
+    letter-spacing: 0.2em; color: var(--white);
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    color: var(--white-dim); margin-top: 12px; line-height: 1.6;
+  }
+  .footer-socials {
+    display: flex; gap: 12px; margin-top: 32px;
+  }
+  .social-link {
+    width: 40px; height: 40px; border: 1px solid var(--gold-border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white-dim); text-decoration: none; font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+  .footer-col-title {
+    font-family: 'Cinzel', serif; font-size: 0.7rem;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .footer-links a {
+    color: var(--white-dim); text-decoration: none;
+    font-size: 0.85rem; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; border-top: 1px solid rgba(200,169,106,0.1);
+    font-size: 0.72rem; color: var(--white-dim);
+  }
+
+  /* CLIENT GALLERY MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(11,11,11,0.96); backdrop-filter: blur(20px);
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    width: 100%; max-width: 480px;
+    border: 1px solid var(--gold-border);
+    background: var(--deep); padding: 60px 48px;
+    position: relative;
+    animation: modal-in 0.5s cubic-bezier(0.23,1,0.32,1);
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(40px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .modal-close {
+    position: absolute; top: 24px; right: 24px;
+    background: none; border: none; color: var(--white-dim);
+    font-size: 1.2rem; cursor: none; transition: color 0.3s;
+  }
+  .modal-close:hover { color: var(--gold); }
+  .modal-logo {
+    font-family: 'Cinzel', serif; font-size: 1.1rem; letter-spacing: 0.2em;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .modal-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    color: var(--white-dim); margin-bottom: 40px; font-size: 0.95rem;
+  }
+  .modal-tabs {
+    display: flex; gap: 0; margin-bottom: 32px;
+    border: 1px solid var(--gold-border);
+  }
+  .modal-tab {
+    flex: 1; padding: 12px; text-align: center;
+    font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: none; transition: all 0.3s;
+    color: var(--white-dim); background: transparent; border: none;
+    font-family: 'Outfit', sans-serif;
+  }
+  .modal-tab.active { background: var(--gold); color: var(--black); }
+
+  /* WHATSAPP FLOAT */
+  .whatsapp-float {
+    position: fixed; bottom: 40px; right: 40px; z-index: 1500;
+    background: #25D366; color: white;
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: wa-pulse 3s ease-in-out infinite;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 12px 48px rgba(37,211,102,0.6); }
+  @keyframes wa-pulse {
+    0%,100% { box-shadow: 0 8px 32px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 8px 32px rgba(37,211,102,0.7), 0 0 0 8px rgba(37,211,102,0.1); }
+  }
+
+  /* ANIMATIONS ON SCROLL */
+  .fade-up {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.23,1,0.32,1);
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up-delay-1 { transition-delay: 0.1s; }
+  .fade-up-delay-2 { transition-delay: 0.2s; }
+  .fade-up-delay-3 { transition-delay: 0.3s; }
+  .fade-up-delay-4 { transition-delay: 0.4s; }
+
+  /* MOBILE MENU */
+  .menu-toggle {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: none;
+    padding: 4px;
+  }
+  .menu-toggle span {
+    display: block; width: 24px; height: 1px;
+    background: var(--white); transition: all 0.3s;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    nav { padding: 24px 32px; }
+    nav.scrolled { padding: 16px 32px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 40px 32px; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .portfolio { padding: 80px 32px; }
+    .services { padding: 80px 32px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .experience { padding: 80px 32px; grid-template-columns: 1fr; }
+    .exp-visual { height: 400px; }
+    .process { padding: 80px 32px; }
+    .process-steps { grid-template-columns: repeat(2, 1fr); }
+    .process-steps::before { display: none; }
+    .testimonials { padding: 80px 32px; }
+    .contact { padding: 80px 32px; grid-template-columns: 1fr; gap: 60px; }
+    footer { padding: 60px 32px 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .portal-cta { padding: 80px 32px; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .menu-toggle { display: flex; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .portfolio-card { grid-column: 1 / -1 !important; grid-row: auto !important; }
+    .portfolio-header { flex-direction: column; gap: 24px; align-items: flex-start; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 32px 24px; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-outline { width: 100%; max-width: 280px; justify-content: center; }
+    .process-steps { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    .portal-features { gap: 32px; }
+    .whatsapp-float { bottom: 24px; right: 24px; }
+  }
+
+  /* ABOUT TEASER */
+  .about-teaser {
+    padding: 120px 60px;
+    background: var(--black);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+  }
+  @media (max-width: 1024px) { .about-teaser { grid-template-columns: 1fr; padding: 80px 32px; gap: 48px; } }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-style: italic; line-height: 1.5;
+    color: var(--white);
+    padding-left: 32px;
+    border-left: 2px solid var(--gold);
+  }
+  .about-text p + p { margin-top: 20px; }
+
+  /* VIDEO SECTION */
+  .video-section {
+    padding: 120px 60px;
+    background: var(--deep);
+    text-align: center;
+  }
+  @media (max-width: 1024px) { .video-section { padding: 80px 32px; } }
+  .video-embed {
+    margin: 60px auto 0;
+    max-width: 900px;
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--grey);
+    border: 1px solid var(--gold-border);
+    overflow: hidden;
+    cursor: none;
+  }
+  .video-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 20px;
+  }
+  .play-btn {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    background: rgba(200,169,106,0.1);
+  }
+  .play-btn:hover { background: var(--gold); }
+  .play-btn svg { fill: var(--gold); width: 28px; transition: fill 0.3s; margin-left: 4px; }
+  .play-btn:hover svg { fill: var(--black); }
+  .video-label { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.3em; color: var(--white-dim); }
+
+  /* MOBILE NAV */
+  .mobile-nav {
+    display: none;
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(11,11,11,0.98); backdrop-filter: blur(20px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 40px;
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: 'Cinzel', serif; font-size: 1.8rem;
+    letter-spacing: 0.15em; color: var(--white);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .mobile-nav a:hover { color: var(--gold); }
+  .mobile-nav-close {
+    position: absolute; top: 24px; right: 24px;
+    background: none; border: none; color: var(--white);
+    font-size: 1.5rem; cursor: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Film grain -->
+<div class="grain"></div>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/917391914935?text=Hello%20HIWF!%20I%27d%20like%20to%20inquire%20about%20your%20wedding%20photography%20services." class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-main">HIWF</span>
+    <span class="nav-logo-sub">Wedding Films</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#films">Films</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#" class="nav-cta" onclick="openClientPortal(event)">Client Login</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="#portfolio" onclick="toggleMobileNav()">Portfolio</a>
+  <a href="#services" onclick="toggleMobileNav()">Services</a>
+  <a href="#about" onclick="toggleMobileNav()">About</a>
+  <a href="#films" onclick="toggleMobileNav()">Films</a>
+  <a href="#contact" onclick="toggleMobileNav()">Contact</a>
+  <a href="#" style="color: var(--gold)" onclick="openClientPortal(event); toggleMobileNav()">Client Login</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Luxury Wedding Photography & Films</div>
+    <h1 class="hero-title">
+      Every Frame,<br>
+      <span class="hero-title-accent">A Forever</span>
+    </h1>
+    <p class="hero-subtitle">Capturing the poetry of your most sacred moments with<br>cinematic artistry and timeless elegance</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">
+        <span>View Portfolio</span>
+        <span>→</span>
+      </a>
+      <a href="#" class="btn-outline" onclick="openClientPortal(event)">
+        <span>Client Gallery</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item fade-up">
+    <span class="stat-num" data-count="500">0</span>
+    <span class="stat-label">Weddings Captured</span>
+  </div>
+  <div class="stat-item fade-up fade-up-delay-1">
+    <span class="stat-num" data-count="8">0</span>
+    <span class="stat-label">Years of Excellence</span>
+  </div>
+  <div class="stat-item fade-up fade-up-delay-2">
+    <span class="stat-num" data-count="50">0</span>
+    <span class="stat-label">Cities Covered</span>
+  </div>
+  <div class="stat-item fade-up fade-up-delay-3">
+    <span class="stat-num">★★★★★</span>
+    <span class="stat-label">Client Rating</span>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header">
+    <div>
+      <div class="section-label fade-up">Our Work</div>
+      <h2 class="section-heading fade-up fade-up-delay-1">Moments That<br>Last Forever</h2>
+    </div>
+    <a href="#contact" class="btn-outline fade-up fade-up-delay-2">View All Work</a>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-card">
+      <div class="card-placeholder"><span class="card-placeholder-icon">📸</span></div>
+      <div class="card-overlay">
+        <div class="card-tag">Wedding Ceremony</div>
+        <div class="card-title">Priya & Arjun — Udaipur</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="card-placeholder"><span class="card-placeholder-icon">💫</span></div>
+      <div class="card-overlay">
+        <div class="card-tag">Pre-Wedding</div>
+        <div class="card-title">Sneha & Rahul — Nashik</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="card-placeholder"><span class="card-placeholder-icon">🌸</span></div>
+      <div class="card-overlay">
+        <div class="card-tag">Haldi Ceremony</div>
+        <div class="card-title">Kavya & Dev — Pune</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="card-placeholder"><span class="card-placeholder-icon">🎬</span></div>
+      <div class="card-overlay">
+        <div class="card-tag">Cinematic Film</div>
+        <div class="card-title">Ananya & Vikram — Mumbai</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="card-placeholder"><span class="card-placeholder-icon">✨</span></div>
+      <div class="card-overlay">
+        <div class="card-tag">Reception</div>
+        <div class="card-title">Pooja & Nikhil — Aurangabad</div>
+      </div>
+    </div>
+    <div class="portfolio-card">
+      <div class="card-placeholder"><span class="card-placeholder-icon">🪷</span></div>
+      <div class="card-overlay">
+        <div class="card-tag">Destination Wedding</div>
+        <div class="card-title">Meera & Rohan — Goa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TEASER -->
+<section class="about-teaser" id="about">
+  <div>
+    <div class="section-label fade-up">Our Story</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">Harshal Ingale<br>Wedding Films</h2>
+    <div class="section-body fade-up fade-up-delay-2" style="margin-top:32px;">
+      <p>We are more than photographers. We are visual storytellers who believe that every wedding carries a unique soul — a story waiting to be told with light, emotion, and cinema.</p>
+      <p style="margin-top:20px;">Based in Nashik, Maharashtra, HIWF has spent over 8 years perfecting the art of capturing weddings across India — from intimate ceremonies to grand destinations.</p>
+    </div>
+    <a href="#contact" class="btn-outline fade-up fade-up-delay-3" style="margin-top:40px; display:inline-flex;">Book a Consultation →</a>
+  </div>
+  <div class="fade-up fade-up-delay-2">
+    <blockquote class="about-quote">
+      "We don't just take photographs. We preserve the feeling of a moment that will never come again."
+    </blockquote>
+    <p style="margin-top: 24px; font-size:0.85rem; color: var(--gold); letter-spacing: 0.2em; text-align:right;">— Harshal Ingale, Founder</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div style="text-align:center; max-width:600px; margin:0 auto;">
+    <div class="section-label fade-up" style="justify-content:center;">What We Offer</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">Crafted for Your<br>Perfect Day</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <span class="service-num">01</span>
+      <span class="service-icon">📷</span>
+      <div class="service-name">Wedding Photography</div>
+      <p class="service-desc">Full-day coverage from rituals to reception. Candid moments, posed portraits, and everything in between. Delivered in high-resolution, gallery-ready format.</p>
+      <div class="service-price">Starting ₹35,000</div>
+    </div>
+    <div class="service-card fade-up fade-up-delay-1">
+      <span class="service-num">02</span>
+      <span class="service-icon">🎬</span>
+      <div class="service-name">Cinematic Films</div>
+      <p class="service-desc">Feature-length wedding films, highlight reels, and teasers crafted with cinematic color grading, original soundscaping, and emotional storytelling.</p>
+      <div class="service-price">Starting ₹45,000</div>
+    </div>
+    <div class="service-card fade-up fade-up-delay-2">
+      <span class="service-num">03</span>
+      <span class="service-icon">🌅</span>
+      <div class="service-name">Pre-Wedding Shoot</div>
+      <p class="service-desc">Romantic storytelling sessions at stunning locations. Relaxed, creative, and deeply personal — a perfect prologue to your wedding story.</p>
+      <div class="service-price">Starting ₹20,000</div>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-num">04</span>
+      <span class="service-icon">👨‍👩‍👧</span>
+      <div class="service-name">Full Event Coverage</div>
+      <p class="service-desc">Multi-day packages covering Haldi, Mehndi, Sangeet, Wedding, and Reception. Dedicated teams ensure no moment is missed.</p>
+      <div class="service-price">Starting ₹75,000</div>
+    </div>
+    <div class="service-card fade-up fade-up-delay-1">
+      <span class="service-num">05</span>
+      <span class="service-icon">📱</span>
+      <div class="service-name">Digital Album & Gallery</div>
+      <p class="service-desc">Private online gallery with photo selection tools. Download in full resolution, share with family, and choose your album photos — all from your phone.</p>
+      <div class="service-price">Included in all packages</div>
+    </div>
+    <div class="service-card fade-up fade-up-delay-2">
+      <span class="service-num">06</span>
+      <span class="service-icon">✈️</span>
+      <div class="service-name">Destination Weddings</div>
+      <p class="service-desc">Goa, Rajasthan, Kerala, or beyond — we travel to tell your story wherever it unfolds. Complete documentation of destination celebrations.</p>
+      <div class="service-price">Custom Pricing</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE SECTION -->
+<section class="experience">
+  <div class="exp-visual fade-up">
+    <div class="exp-frame exp-frame-main">
+      <div class="card-placeholder" style="height:100%">
+        <span class="card-placeholder-icon" style="font-size: 3rem;">📸</span>
+      </div>
+    </div>
+    <div class="exp-frame exp-frame-accent">
+      <div class="card-placeholder" style="height:100%; opacity: 0.5;">
+        <span class="card-placeholder-icon" style="font-size: 2rem;">🎬</span>
+      </div>
+    </div>
+    <div class="exp-badge">
+      <span class="exp-badge-num">8+</span>
+      <span class="exp-badge-text">Years of Excellence</span>
+    </div>
+  </div>
+  <div>
+    <div class="section-label fade-up">The HIWF Difference</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">Why Couples<br>Choose Us</h2>
+    <div class="section-body fade-up fade-up-delay-2" style="margin-top:32px;">
+      <p>We approach every wedding as a once-in-a-lifetime cinematic event. Our team combines technical mastery with artistic vision to deliver imagery that transcends the ordinary.</p>
+    </div>
+    <div style="margin-top: 48px; display: flex; flex-direction: column; gap: 24px;">
+      <div class="fade-up fade-up-delay-2" style="display:flex; gap:20px; align-items:flex-start;">
+        <div style="color:var(--gold); font-size:1.2rem; flex-shrink:0; margin-top:2px;">◆</div>
+        <div>
+          <div style="font-family:'Cinzel',serif; font-size:0.9rem; margin-bottom:6px;">Cinematic Visual Language</div>
+          <div style="font-size:0.85rem; color:var(--white-dim);">Every shot is composed with filmmaker's precision — light, depth, timing, emotion.</div>
+        </div>
+      </div>
+      <div class="fade-up fade-up-delay-3" style="display:flex; gap:20px; align-items:flex-start;">
+        <div style="color:var(--gold); font-size:1.2rem; flex-shrink:0; margin-top:2px;">◆</div>
+        <div>
+          <div style="font-family:'Cinzel',serif; font-size:0.9rem; margin-bottom:6px;">Private Digital Gallery</div>
+          <div style="font-size:0.85rem; color:var(--white-dim);">Your photos delivered in a beautiful, secure online gallery — accessible from any device.</div>
+        </div>
+      </div>
+      <div class="fade-up fade-up-delay-4" style="display:flex; gap:20px; align-items:flex-start;">
+        <div style="color:var(--gold); font-size:1.2rem; flex-shrink:0; margin-top:2px;">◆</div>
+        <div>
+          <div style="font-family:'Cinzel',serif; font-size:0.9rem; margin-bottom:6px;">Guaranteed Delivery Timeline</div>
+          <div style="font-size:0.85rem; color:var(--white-dim);">Photos within 30 days, videos within 60 days — always on time, always exceptional.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="films">
+  <div class="section-label fade-up" style="justify-content:center;">Cinematic Films</div>
+  <h2 class="section-heading fade-up fade-up-delay-1">Watch Our Stories</h2>
+  <p class="section-body fade-up fade-up-delay-2" style="margin-top:16px; max-width:560px; margin-left:auto; margin-right:auto;">Experience the emotion, the beauty, and the love — as captured through our lens.</p>
+  <div class="video-embed fade-up fade-up-delay-2">
+    <div class="video-placeholder">
+      <div class="play-btn" onclick="this.innerHTML='<svg viewBox=\\'0 0 24 24\\'><rect x=\\'6\\' y=\\'4\\' width=\\'4\\' height=\\'16\\'/><rect x=\\'14\\' y=\\'4\\' width=\\'4\\' height=\\'16\\'/></svg>'">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <div class="video-label">Priya & Arjun — Wedding Highlights · 4:32</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div style="text-align:center; max-width:600px; margin:0 auto;">
+    <div class="section-label fade-up" style="justify-content:center;">How It Works</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">Your Journey<br>With HIWF</h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step fade-up">
+      <div class="step-dot">01</div>
+      <div class="step-title">Consultation</div>
+      <p class="step-desc">We meet to understand your vision, style, and the story you want to tell on your wedding day.</p>
+    </div>
+    <div class="process-step fade-up fade-up-delay-1">
+      <div class="step-dot">02</div>
+      <div class="step-title">Planning</div>
+      <p class="step-desc">Detailed shot lists, location scouting, timeline coordination — we prepare meticulously.</p>
+    </div>
+    <div class="process-step fade-up fade-up-delay-2">
+      <div class="step-dot">03</div>
+      <div class="step-title">Your Wedding Day</div>
+      <p class="step-desc">We capture every moment — candid tears, laughter, traditions — invisibly and artfully.</p>
+    </div>
+    <div class="process-step fade-up fade-up-delay-3">
+      <div class="step-dot">04</div>
+      <div class="step-title">Gallery Delivery</div>
+      <p class="step-desc">Your private gallery goes live. Select album photos, download, and relive forever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div style="text-align:center; max-width:600px; margin:0 auto;">
+    <div class="section-label fade-up" style="justify-content:center;">Love Notes</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">What Couples Say</h2>
+  </div>
+  <div class="testimonials-track">
+    <!-- Duplicated for infinite scroll -->
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">HIWF didn't just photograph our wedding — they captured the essence of our love. Every image feels like a painting. We cry every time we look at the album.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">P</div>
+        <div>
+          <div class="author-name">Priya Sharma</div>
+          <div class="author-location">Nashik, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The cinematic film they made for us is absolutely breathtaking. Our families watch it repeatedly and get emotional every single time. Worth every rupee.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Rahul & Sneha</div>
+          <div class="author-location">Pune, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The client gallery was so easy to use! We could select our album photos right from our phones and share with family abroad. Professional and elegant.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Ananya Joshi</div>
+          <div class="author-location">Mumbai, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Harshal and team were incredibly professional. They blended into our ceremony so naturally yet caught every single magical moment. Truly gifted artists.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">K</div>
+        <div>
+          <div class="author-name">Kavya & Dev</div>
+          <div class="author-location">Aurangabad, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Our destination wedding in Goa was covered flawlessly. The images have that cinematic quality that makes them look like movie stills. Highly recommend!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <div class="author-name">Meera & Rohan</div>
+          <div class="author-location">Goa</div>
+        </div>
+      </div>
+    </div>
+    <!-- Duplicates for infinite scroll effect -->
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">HIWF didn't just photograph our wedding — they captured the essence of our love. Every image feels like a painting. We cry every time we look at the album.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">P</div>
+        <div>
+          <div class="author-name">Priya Sharma</div>
+          <div class="author-location">Nashik, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The cinematic film they made for us is absolutely breathtaking. Our families watch it repeatedly and get emotional every single time. Worth every rupee.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Rahul & Sneha</div>
+          <div class="author-location">Pune, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">The client gallery was so easy to use! We could select our album photos right from our phones and share with family abroad. Professional and elegant.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">A</div>
+        <div>
+          <div class="author-name">Ananya Joshi</div>
+          <div class="author-location">Mumbai, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Harshal and team were incredibly professional. They blended into our ceremony so naturally yet caught every single magical moment. Truly gifted artists.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">K</div>
+        <div>
+          <div class="author-name">Kavya & Dev</div>
+          <div class="author-location">Aurangabad, Maharashtra</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Our destination wedding in Goa was covered flawlessly. The images have that cinematic quality that makes them look like movie stills. Highly recommend!</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <div class="author-name">Meera & Rohan</div>
+          <div class="author-location">Goa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT PORTAL CTA -->
+<section class="portal-cta">
+  <div class="portal-cta-bg"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="section-label fade-up" style="justify-content:center;">Your Gallery Awaits</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">Access Your<br>Private Gallery</h2>
+    <p class="section-body fade-up fade-up-delay-2" style="margin-top:16px; max-width:500px; margin-left:auto; margin-right:auto; text-align:center;">Your wedding photos and videos are delivered in a beautiful, secure gallery. Select album photos, download, and share — all in one place.</p>
+    <div class="portal-features fade-up fade-up-delay-2">
+      <div class="portal-feature">
+        <div class="portal-feature-icon">🔒</div>
+        <span>Secure Access</span>
+      </div>
+      <div class="portal-feature">
+        <div class="portal-feature-icon">❤️</div>
+        <span>Favorites & Selection</span>
+      </div>
+      <div class="portal-feature">
+        <div class="portal-feature-icon">⬇️</div>
+        <span>HD Downloads</span>
+      </div>
+      <div class="portal-feature">
+        <div class="portal-feature-icon">📱</div>
+        <span>Mobile Friendly</span>
+      </div>
+    </div>
+    <button class="btn-primary fade-up fade-up-delay-3" onclick="openClientPortal(event)" style="border:none; cursor:none;">
+      <span>Enter Client Gallery</span>
+      <span>→</span>
+    </button>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div>
+    <div class="section-label fade-up">Get In Touch</div>
+    <h2 class="section-heading fade-up fade-up-delay-1">Let's Tell Your<br>Love Story</h2>
+    <p class="section-body fade-up fade-up-delay-2" style="margin-top:24px;">Every great love story deserves to be told beautifully. Reach out to discuss your wedding and check availability.</p>
+    <div class="contact-details fade-up fade-up-delay-2">
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Phone / WhatsApp</div>
+          <div class="contact-item-value">
+            <a href="tel:+917391914935" class="contact-item-link">+91 73919 14935</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value">
+            <a href="mailto:Studiohiwf@gmail.com" class="contact-item-link">Studiohiwf@gmail.com</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Location</div>
+          <div class="contact-item-value">Nashik, Maharashtra · Pan-India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fade-up fade-up-delay-2">
+    <div class="section-label">Send a Message</div>
+    <div class="contact-form" style="margin-top:24px;">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" placeholder="Priya Sharma">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" placeholder="+91 98765 43210">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="priya@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Wedding Date</label>
+        <input type="date" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Service Required</label>
+        <select class="form-select">
+          <option value="">Select a service...</option>
+          <option>Wedding Photography</option>
+          <option>Cinematic Wedding Film</option>
+          <option>Pre-Wedding Shoot</option>
+          <option>Full Event Coverage</option>
+          <option>Destination Wedding</option>
+          <option>Complete Package</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tell us about your wedding</label>
+        <textarea class="form-textarea" placeholder="Venue, guest count, vision for your photos..."></textarea>
+      </div>
+      <button class="btn-primary" onclick="handleFormSubmit(this)" style="width:100%; border:none; cursor:none; justify-content:center; font-size:0.72rem;">
+        <span>Send Message</span>
+        <span>→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">HIWF</div>
+      <p class="footer-tagline">Harshal Ingale Wedding Films<br>Capturing love, one frame at a time.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-link" title="YouTube">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://wa.me/917391914935" class="social-link" title="WhatsApp" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#films">Films</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Wedding Photography</a></li>
+        <li><a href="#services">Cinematic Films</a></li>
+        <li><a href="#services">Pre-Wedding Shoot</a></li>
+        <li><a href="#services">Full Coverage</a></li>
+        <li><a href="#services">Destination</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+917391914935">+91 73919 14935</a></li>
+        <li><a href="mailto:Studiohiwf@gmail.com">Studiohiwf@gmail.com</a></li>
+        <li><a href="#contact">Book a Session</a></li>
+        <li><a href="#" onclick="openClientPortal(event)">Client Login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2024 Harshal Ingale Wedding Films. All rights reserved.</div>
+    <div style="color: var(--gold); font-size: 0.65rem; letter-spacing: 0.2em;">NASHIK · PUNE · MUMBAI · PAN-INDIA</div>
+    <div>Crafted with ♥ for love stories</div>
+  </div>
+</footer>
+
+<!-- CLIENT LOGIN MODAL -->
+<div class="modal-overlay" id="clientModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeClientPortal()">✕</button>
+    <div class="modal-logo">HIWF</div>
+    <div class="modal-subtitle">Access your private wedding gallery</div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" onclick="switchTab(this, 'login')">Client Login</button>
+      <button class="modal-tab" onclick="switchTab(this, 'otp')">Enter with Code</button>
+    </div>
+
+    <div id="tab-login">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" onclick="handleLogin(this)" style="width:100%; border:none; cursor:none; justify-content:center; margin-top:8px;">
+        <span>Enter Gallery</span>
+        <span>→</span>
+      </button>
+      <p style="text-align:center; margin-top:20px; font-size:0.75rem; color:var(--white-dim);">
+        No account? Contact us at <a href="mailto:Studiohiwf@gmail.com" style="color:var(--gold);">Studiohiwf@gmail.com</a>
+      </p>
+    </div>
+
+    <div id="tab-otp" style="display:none;">
+      <div class="form-group">
+        <label class="form-label">Gallery Access Code</label>
+        <input type="text" class="form-input" placeholder="Enter your 6-digit code" maxlength="6" style="letter-spacing:0.4em; text-align:center; font-size:1.2rem;">
+      </div>
+      <button class="btn-primary" onclick="handleLogin(this)" style="width:100%; border:none; cursor:none; justify-content:center; margin-top:8px;">
+        <span>Access Gallery</span>
+        <span>→</span>
+      </button>
+      <p style="text-align:center; margin-top:20px; font-size:0.75rem; color:var(--white-dim);">
+        Access code is provided by HIWF after your event
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .portfolio-card, .service-card, .contact-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.width = '60px'; ring.style.height = '60px';
+      ring.style.borderColor = 'rgba(200,169,106,0.6)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.width = '36px'; ring.style.height = '36px';
+      ring.style.borderColor = 'rgba(200,169,106,0.3)';
+    });
+  });
+
+  // NAV SCROLL
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // SCROLL ANIMATIONS
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Counter animation
+        const num = e.target.querySelector('[data-count]');
+        if (num) animateCount(num);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // COUNTER
+  function animateCount(el) {
+    if (el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const target = +el.dataset.count;
+    const suffix = target >= 100 ? '+' : target >= 10 ? '+' : '+';
+    let start = 0;
+    const duration = 2000;
+    const step = timestamp => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+
+  // MODAL
+  function openClientPortal(e) {
+    if (e) e.preventDefault();
+    document.getElementById('clientModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeClientPortal() {
+    document.getElementById('clientModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('clientModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeClientPortal();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeClientPortal(); });
+
+  function switchTab(btn, tab) {
+    document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('tab-otp').style.display = tab === 'otp' ? 'block' : 'none';
+  }
+
+  function handleLogin(btn) {
+    const span = btn.querySelector('span');
+    span.textContent = 'Checking...';
+    setTimeout(() => {
+      span.textContent = 'Gallery Ready ✓';
+      btn.style.background = '#2a9d2a';
+      setTimeout(() => {
+        closeClientPortal();
+        btn.querySelector('span').textContent = 'Enter Gallery';
+        btn.style.background = '';
+      }, 1500);
+    }, 1800);
+  }
+
+  function handleFormSubmit(btn) {
+    const span = btn.querySelector('span');
+    span.textContent = 'Sending...';
+    setTimeout(() => {
+      span.textContent = 'Message Sent ✓';
+      btn.style.background = '#2a9d2a';
+      setTimeout(() => {
+        span.textContent = 'Send Message';
+        btn.style.background = '';
+      }, 3000);
+    }, 1500);
+  }
+
+  // MOBILE NAV
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+  }
+
+  // PARALLAX subtle on hero
+  window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero-content');
+    const scrolled = window.scrollY;
+    if (hero && scrolled < window.innerHeight) {
+      hero.style.transform = `translateY(${scrolled * 0.2}px)`;
+      hero.style.opacity = 1 - scrolled / (window.innerHeight * 0.7);
+    }
+  });
+</script>
+</body>
+</html>
